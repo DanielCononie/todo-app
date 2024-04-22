@@ -1,0 +1,17 @@
+.updateUserField {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  align-content: center;
+}
+
+.submit-btn {
+  padding: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: solid white;
+  color: white;
+  background-color: #3f51b5;
+}

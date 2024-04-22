@@ -1,0 +1,16 @@
+.addTodo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 50vh;
+}
+
+.register-field {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+
+  align-items: center;
+}

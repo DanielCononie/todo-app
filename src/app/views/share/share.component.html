@@ -1,0 +1,18 @@
+<h2
+  style="
+    text-align: center;
+    margin-top: 100px;
+    font-weight: bold;
+    font-size: 50px;
+  "
+>
+  SHARE LIST
+</h2>
+<div class="share-container">
+  <mat-form-field class="input-one" [style.width.px]="300">
+    <mat-label>Email to share with: </mat-label>
+    <input matInput [formControl]="emailFormControl" />
+  </mat-form-field>
+  <button (click)="ShareList()" class="submit-btn">Submit</button>
+  <p style="color: red; font-weight: bold">{{ errMessage }}</p>
+</div>

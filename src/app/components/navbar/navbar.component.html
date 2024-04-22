@@ -1,0 +1,64 @@
+<mat-toolbar color="primary">
+  <button mat-icon-button matTooltip="Menu" [matMenuTriggerFor]="menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item [routerLink]="['/']">View Todo's</button>
+    <button
+      *ngIf="isLoggedIn === true"
+      mat-menu-item
+      [routerLink]="['/addTodo']"
+    >
+      Post new todo
+    </button>
+    <button *ngIf="isLoggedIn === true" mat-menu-item>Share list</button>
+  </mat-menu>
+  <button
+    [routerLink]="['/']"
+    matTooltip="Click here to go to the homepage"
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    <mat-icon>home</mat-icon>
+  </button>
+  <span class="example-spacer" style="width: 90%"></span>
+
+  <button
+    mat-icon-button
+    matTooltip="Account settings"
+    [matMenuTriggerFor]="menu2"
+  >
+    <mat-icon>person</mat-icon>
+  </button>
+  <mat-menu #menu2="matMenu">
+    <button
+      mat-menu-item
+      [routerLink]="['/register']"
+      matTooltip="Click here to register an account"
+      aria-label="Example icon-button with share icon"
+    >
+      Register
+    </button>
+    <button
+      *ngIf="!isLoggedIn"
+      mat-menu-item
+      [routerLink]="['/login']"
+      matTooltip="Click here to log in"
+      aria-label="Example icon-button with share icon"
+    >
+      Login
+    </button>
+
+    <button
+      *ngIf="isLoggedIn === true"
+      mat-menu-item
+      [routerLink]="['/updateUser']"
+      matTooltip="Click here to update account information"
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+    >
+      Update user
+    </button>
+  </mat-menu>
+</mat-toolbar>

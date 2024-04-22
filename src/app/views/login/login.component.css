@@ -1,0 +1,21 @@
+.login-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+  align-items: center;
+  align-content: center;
+}
+
+.input-one {
+  margin-right: 10px;
+}
+
+.submit-btn {
+  padding: 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  border: solid white;
+  color: white;
+  background-color: #3f51b5;
+}

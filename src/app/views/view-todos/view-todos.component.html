@@ -1,0 +1,88 @@
+<div *ngIf="todos.length <= 0" style="display: flex; justify-content: center">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="view-todo-container" *ngIf="todos.length > 0">
+  <h2
+    style="
+      text-align: center;
+      color: #3f51b5;
+      font-weight: bold;
+      font-size: 30px;
+    "
+  >
+    VIEW TODOS
+  </h2>
+  <span>
+    <mat-form-field>
+      <mat-label>Find by list ID: </mat-label>
+      <input matInput [formControl]="searchFormControl" />
+    </mat-form-field>
+    <button mat-icon-button matTooltip="Search" (click)="filterTodos()">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button matTooltip="Reset" (click)="resetTodos()">
+      <mat-icon>cancel</mat-icon>
+    </button>
+    <button (click)="filterMyLists()" class="filter-btn">My lists</button>
+  </span>
+
+  <div *ngFor="let todo of filteredTodos" class="todo-item">
+    <div class="todo-content">
+      <div class="todo-item-attribute">
+        <p>ID:</p>
+
+        <p class="todo-item-value">{{ todo.id }}</p>
+      </div>
+
+      <div class="todo-item-attribute">
+        <p>Title:</p>
+
+        <p class="todo-item-value">{{ todo.title }}</p>
+      </div>
+
+      <div class="todo-item-attribute">
+        <p>Created by:</p>
+
+        <p class="todo-item-value">{{ todo.created_by }}</p>
+      </div>
+
+      <div class="todo-item-attribute">
+        <p>Created at:</p>
+        <p class="todo-item-value">
+          {{ todo.created_at }}
+        </p>
+      </div>
+
+      <div class="todo-item-attribute">
+        <p>Public status:</p>
+        <p class="todo-item-value">{{ todo.public_list }}</p>
+      </div>
+    </div>
+    <div class="todo-buttons">
+      <button
+        [routerLink]="['/edit', todo.id]"
+        *ngIf="userID && todo.created_by === userID"
+      >
+        Edit
+      </button>
+      <button
+        *ngIf="userID && todo.created_by === userID"
+        (click)="this.DeleteTodo(todo.id)"
+      >
+        Delete
+      </button>
+      <button
+        *ngIf="userID && todo.created_by === userID"
+        [routerLink]="['/share', todo.id]"
+      >
+        Share
+      </button>
+      <button
+        *ngIf="userID && todo.created_by === userID"
+        [routerLink]="['/listItem', todo.id]"
+      >
+        List items
+      </button>
+    </div>
+  </div>
+</div>

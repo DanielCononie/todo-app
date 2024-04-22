@@ -1,0 +1,30 @@
+<h2 style="text-align: center; font-size: 50px; color: #3f51b5">
+  CREATE ACCOUNT
+</h2>
+<div *ngIf="loading === true" class="register-field">
+  <mat-spinner></mat-spinner>
+</div>
+<div class="register-field" *ngIf="loading === false">
+  <mat-form-field>
+    <mat-label>Name: </mat-label>
+    <input matInput [formControl]="nameFormControl" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Email: </mat-label>
+    <input matInput [formControl]="emailFormControl" />
+  </mat-form-field>
+  <mat-form-field>
+    <mat-label>Password: </mat-label>
+    <input matInput [formControl]="passwordFormControl" type="password" />
+  </mat-form-field>
+  <button
+    matTooltip="Submit"
+    class="example-icon favorite-icon submit-btn primary"
+    aria-label="Example icon-button with heart icon"
+    color="primary"
+    (click)="CreateUser()"
+  >
+    Submit
+  </button>
+  <p class="register-err" *ngIf="errorMessage">*{{ errorMessage }}</p>
+</div>
