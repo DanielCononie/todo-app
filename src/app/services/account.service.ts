@@ -26,6 +26,10 @@ export class AccountService {
 
   UserLoggedIn: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  LogOut() {
+    this.UserLoggedIn.emit(false);
+  }
+
   async GetUser() {
     let token = localStorage.getItem('token');
     if (!token) {

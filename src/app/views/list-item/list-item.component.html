@@ -1,1 +1,71 @@
-<p>list-item works!</p>
+<h2 style="text-align: center; font-size: 30px; font-weight: normal">
+  LIST ITEMS FOR: <strong>{{ currentTodoList?.title }}</strong>
+</h2>
+
+<div
+  *ngIf="todoItems.length <= 0"
+  style="
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+  "
+>
+  <mat-spinner></mat-spinner>
+  <p>If Loading time is long, no list items exist!</p>
+  <button
+    [routerLink]="['/']"
+    style="
+      background-color: #3f51b5;
+      color: white;
+      border: none;
+      padding: 5px;
+      font-weight: bold;
+      cursor: pointer;
+      width: 20%;
+    "
+  >
+    Back to view todos
+  </button>
+</div>
+<div class="view-list-item-container" *ngIf="todoItems.length > 0">
+  <div *ngFor="let item of filteredTodoItems" class="list-item">
+    <div class="list-item-content">
+      <div class="list-item-attribute">
+        <p>Task:</p>
+        <p class="list-item-value">{{ item.task }}</p>
+      </div>
+      <div class="list-item-attribute">
+        <p>Completed Status:</p>
+        <p class="list-item-value">{{ item.completed }}</p>
+      </div>
+
+      <div class="list-item-attribute">
+        <p>Updated at:</p>
+        <p class="list-item-value">{{ item.updated_at }}</p>
+      </div>
+    </div>
+    <div class="list-item-buttons">
+      <button
+        matTooltip="Delete"
+        mat-icon-button
+        class="example-icon favorite-icon"
+        aria-label="Example icon-button with heart icon"
+        *ngIf="userID === currentTodoList?.created_by"
+        (click)="DeleteListItem(item.id, currentTodoList?.id)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+      <button
+        matTooltip="Update"
+        mat-icon-button
+        class="example-icon favorite-icon"
+        aria-label="Example icon-button with heart icon"
+        *ngIf="userID === currentTodoList?.created_by"
+        [routerLink]="['/updateListItem', currentTodoList?.id, item.id]"
+      >
+        <mat-icon>update</mat-icon>
+      </button>
+    </div>
+  </div>
+</div>

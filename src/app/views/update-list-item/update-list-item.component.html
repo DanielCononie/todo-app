@@ -1,0 +1,25 @@
+<h2 style="text-align: center; font-size: 30px">
+  UPDATE LIST ITEM {{ this.listItem?.task }}
+</h2>
+<div class="update-container">
+  <mat-form-field style="margin-right: 10px">
+    <mat-label>Task: </mat-label>
+    <input matInput class="input" [formControl]="taskFormControl" />
+  </mat-form-field>
+  <mat-form-field style="margin-right: 10px">
+    <mat-label>Due Date: </mat-label>
+    <input
+      matInput
+      type="date"
+      class="input"
+      [formControl]="dueDateFormControl"
+    />
+  </mat-form-field>
+  <br />
+  <button (click)="UpdateListItem()" class="submit-btn">Submit</button>
+  <button [routerLink]="['/listItem', todoid]" class="submit-btn">Back</button>
+  <br />
+  <p *ngIf="errMessage" style="color: red; font-weight: bold">
+    *{{ errMessage }}
+  </p>
+</div>

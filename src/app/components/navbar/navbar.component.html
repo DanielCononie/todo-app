@@ -60,5 +60,15 @@
     >
       Update user
     </button>
+    <button
+      *ngIf="isLoggedIn === true"
+      mat-menu-item
+      matTooltip="Log out"
+      class="example-icon"
+      aria-label="Example icon-button with share icon"
+      (click)="LogOut()"
+    >
+      Log out
+    </button>
   </mat-menu>
 </mat-toolbar>

@@ -1,0 +1,22 @@
+<h2 style="font-size: 30px; font-weight: bold; text-align: center">
+  ADD LIST ITEM
+</h2>
+<div class="addListItem">
+  <span>
+    <mat-form-field style="margin-right: 10px">
+      <mat-label>Task: </mat-label>
+      <input matInput class="input" [formControl]="taskFormControl" />
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Due Date: </mat-label>
+      <input
+        matInput
+        type="date"
+        class="input"
+        [formControl]="dueDateFormControl"
+      />
+    </mat-form-field>
+  </span>
+  <button (click)="AddListItem()">Submit</button>
+  <p style="color: red; font-weight: bold">*{{ errMessage }}</p>
+</div>

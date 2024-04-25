@@ -77,12 +77,19 @@
       >
         Share
       </button>
-      <button
-        *ngIf="userID && todo.created_by === userID"
-        [routerLink]="['/listItem', todo.id]"
-      >
-        List items
-      </button>
+      <button matTooltip="Menu" [matMenuTriggerFor]="menu5">List items</button>
+      <mat-menu #menu5="matMenu">
+        <button mat-menu-item [routerLink]="['/listItem', todo.id]">
+          View List items
+        </button>
+        <button
+          *ngIf="userID && todo.created_by === userID"
+          mat-menu-item
+          [routerLink]="['/addListItem', todo.id]"
+        >
+          Add new list item
+        </button>
+      </mat-menu>
     </div>
   </div>
 </div>

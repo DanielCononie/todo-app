@@ -8,6 +8,8 @@ import { UpdateUserComponent } from './views/update-user/update-user.component';
 import { ViewTodosComponent } from './views/view-todos/view-todos.component';
 import { ListItemComponent } from './views/list-item/list-item.component';
 import { ShareComponent } from './views/share/share.component';
+import { AddListItemComponent } from './views/add-list-item/add-list-item.component';
+import { UpdateListItemComponent } from './views/update-list-item/update-list-item.component';
 
 const routes: Routes = [
   {
@@ -41,6 +43,14 @@ const routes: Routes = [
   {
     path: 'share/:id',
     component: ShareComponent,
+  },
+  {
+    path: 'addListItem/:id',
+    component: AddListItemComponent,
+  },
+  {
+    path: 'updateListItem/:todoid/:itemId',
+    component: UpdateListItemComponent,
   },
 ];
 

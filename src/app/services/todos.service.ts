@@ -18,6 +18,262 @@ export class TodosService {
   ) {}
   isLoggedIn: boolean = false;
 
+  ngOnInit() {
+    this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
+      this.isLoggedIn = loggedIn;
+    });
+  }
+
+  async GetListItemById(todoId: number, list_item_id: number) {
+    this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
+      this.isLoggedIn = loggedIn;
+    });
+
+    if (!this.isLoggedIn) {
+      // Make request with public lists
+      try {
+        let response = await firstValueFrom(
+          this.httpClient.get(
+            `https://unfwfspring2024.azurewebsites.net/todo/${todoId}/item/${list_item_id}`
+          )
+        );
+        console.log('List item by ID', response);
+        return response;
+      } catch (error) {
+        console.log('Error in public lists');
+        return null;
+      }
+    } else {
+      try {
+        let token = localStorage.getItem('token');
+        if (!token) {
+          let response = await firstValueFrom(
+            this.httpClient.get(
+              `https://unfwfspring2024.azurewebsites.net/todo/${todoId}/item/${list_item_id}`
+            )
+          );
+          console.log('List item by ID', response);
+          return response;
+        }
+
+        let tokenValue: Token = JSON.parse(token);
+
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${tokenValue.token}`,
+        });
+        // Make requests with token
+        let response = await firstValueFrom(
+          this.httpClient.get(
+            `https://unfwfspring2024.azurewebsites.net/todo/${todoId}/item/${list_item_id}`,
+            { headers: headers }
+          )
+        );
+        return response;
+      } catch (error) {
+        return null;
+      }
+    }
+  }
+
+  async UpdateListItem(
+    task: string | null,
+    due_date: Date | null,
+    todoid: number,
+    list_item_id: number
+  ) {
+    // let list_item_data: { [key: string]: string | Date | null } = {};
+    let list_item_data = {
+      task: task,
+      due_date: due_date,
+    };
+
+    let token = localStorage.getItem('token');
+    if (!token) {
+      return false;
+    }
+    let tokenValue: Token = JSON.parse(token);
+
+    if (!task && !due_date) {
+      return false;
+    }
+
+    console.log(list_item_data);
+
+    try {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${tokenValue.token}`,
+      });
+
+      let response = await firstValueFrom(
+        this.httpClient.patch(
+          `https://unfwfspring2024.azurewebsites.net/todo/${todoid}/item/${list_item_id}`,
+          list_item_data,
+          { headers: headers }
+        )
+      );
+      console.log(response);
+      return true;
+    } catch (error) {
+      console.log('Update false');
+      return false;
+    }
+  }
+
+  async DeleteListItem(list_item_id: number, todoID: number) {
+    let token = localStorage.getItem('token');
+    if (!token) {
+      return false;
+    }
+    let tokenValue: Token = JSON.parse(token);
+
+    try {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${tokenValue.token}`,
+      });
+      console.log(list_item_id, todoID);
+
+      let response = await firstValueFrom(
+        this.httpClient.delete(
+          `https://unfwfspring2024.azurewebsites.net/todo/${todoID}/item/${list_item_id}`,
+          { headers: headers }
+        )
+      );
+      console.log(response);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async AddListItem(todoID: number, task: string, due_date: Date) {
+    let token = localStorage.getItem('token');
+    if (!token) {
+      return false;
+    }
+    let tokenValue: Token = JSON.parse(token);
+
+    let userData = {
+      task: task,
+      due_date: due_date,
+    };
+
+    try {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${tokenValue.token}`,
+      });
+
+      let response = await firstValueFrom(
+        this.httpClient.post(
+          `https://unfwfspring2024.azurewebsites.net/todo/${todoID}/item`,
+          userData,
+          { headers: headers }
+        )
+      );
+      console.log(response);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
+  async GetTodoById(todoID: number) {
+    this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
+      this.isLoggedIn = loggedIn;
+    });
+
+    if (!this.isLoggedIn) {
+      // Make request with public lists
+      try {
+        let response = await firstValueFrom(
+          this.httpClient.get(
+            `https://unfwfspring2024.azurewebsites.net/todo/${todoID}`
+          )
+        );
+        return response;
+      } catch (error) {
+        console.log('Error in public lists');
+        return null;
+      }
+    } else {
+      try {
+        let token = localStorage.getItem('token');
+        if (!token) {
+          let response = await firstValueFrom(
+            this.httpClient.get(
+              `https://unfwfspring2024.azurewebsites.net/todo/${todoID}`
+            )
+          );
+          return response;
+        }
+
+        let tokenValue: Token = JSON.parse(token);
+
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${tokenValue.token}`,
+        });
+        // Make requests with token
+        let response = await firstValueFrom(
+          this.httpClient.get(
+            `https://unfwfspring2024.azurewebsites.net/todo/${todoID}`,
+            { headers: headers }
+          )
+        );
+        return response;
+      } catch (error) {
+        return null;
+      }
+    }
+  }
+
+  async GetListItems(todoID: number) {
+    this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
+      this.isLoggedIn = loggedIn;
+    });
+
+    if (!this.isLoggedIn) {
+      // Make request with public lists
+      try {
+        let response = await firstValueFrom(
+          this.httpClient.get(
+            `https://unfwfspring2024.azurewebsites.net/todo/${todoID}/items`
+          )
+        );
+        return response;
+      } catch (error) {
+        console.log('Error in public lists');
+        return null;
+      }
+    } else {
+      try {
+        let token = localStorage.getItem('token');
+        if (!token) {
+          let response = await firstValueFrom(
+            this.httpClient.get(
+              `https://unfwfspring2024.azurewebsites.net/todo/${todoID}/items`
+            )
+          );
+          return response;
+        }
+
+        let tokenValue: Token = JSON.parse(token);
+
+        const headers = new HttpHeaders({
+          Authorization: `Bearer ${tokenValue.token}`,
+        });
+        // Make requests with token
+        let response = await firstValueFrom(
+          this.httpClient.get(
+            `https://unfwfspring2024.azurewebsites.net/todo/${todoID}/items`,
+            { headers: headers }
+          )
+        );
+        return response;
+      } catch (error) {
+        return null;
+      }
+    }
+  }
+
   async ShareList(id: number, email: string) {
     let token = localStorage.getItem('token');
     if (!token) {

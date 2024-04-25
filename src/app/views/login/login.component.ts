@@ -23,7 +23,7 @@ export class LoginComponent {
       let loggedIn = await this.accSvc.Login(email, password);
 
       if (loggedIn) {
-        alert('Success');
+        this.router.navigate(['/']);
       } else {
         this.errorMessage = 'Invalid Login';
       }
