@@ -25,6 +25,7 @@ export class AccountService {
   constructor(private router: Router, private httpClient: HttpClient) {}
 
   UserLoggedIn: EventEmitter<boolean> = new EventEmitter<boolean>();
+  isLoggedIn: boolean = false;
 
   LogOut() {
     this.UserLoggedIn.emit(false);
@@ -32,7 +33,8 @@ export class AccountService {
 
   async GetUser() {
     let token = localStorage.getItem('token');
-    if (!token) {
+
+    if (!token || !this.isLoggedIn) {
       return false;
     }
     let tokenValue: Token = JSON.parse(token);
@@ -47,11 +49,10 @@ export class AccountService {
           headers: headers,
         })
       );
-      console.log(response);
 
+      console.log(response);
       return response;
     } catch (error) {
-      console.log(false);
       return false;
     }
   }
@@ -126,6 +127,7 @@ export class AccountService {
       );
       localStorage.setItem(`token`, JSON.stringify(response));
       this.UserLoggedIn.emit(true);
+      this.isLoggedIn = true;
       return true;
     } catch (error) {
       return false;

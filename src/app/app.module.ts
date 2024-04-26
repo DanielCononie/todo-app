@@ -27,6 +27,7 @@ import { ShareComponent } from './views/share/share.component';
 import { AddListItemComponent } from './views/add-list-item/add-list-item.component';
 import { UpdateListItemComponent } from './views/update-list-item/update-list-item.component';
 import { UpdateTodoComponent } from './views/update-todo/update-todo.component';
+import { AuthGuard } from './auth.guard';
 
 @NgModule({
   declarations: [

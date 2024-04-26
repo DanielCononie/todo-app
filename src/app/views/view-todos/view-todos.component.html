@@ -83,7 +83,7 @@
           View List items
         </button>
         <button
-          *ngIf="userID && todo.created_by === userID && !todo.public_list"
+          *ngIf="userID && todo.created_by === userID"
           mat-menu-item
           [routerLink]="['/addListItem', todo.id]"
         >

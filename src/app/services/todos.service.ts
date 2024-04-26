@@ -17,11 +17,13 @@ export class TodosService {
     private actSvc: AccountService
   ) {}
   isLoggedIn: boolean = false;
+  loggedIn: boolean = false;
 
   ngOnInit() {
     this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
     });
+    this.loggedIn = this.actSvc.isLoggedIn;
   }
 
   async UpdateTodo(title: string, public_list: boolean, list_id: number) {
@@ -272,12 +274,14 @@ export class TodosService {
 
     if (!this.isLoggedIn) {
       // Make request with public lists
+      console.log('Yo');
       try {
         let response = await firstValueFrom(
           this.httpClient.get(
             `https://unfwfspring2024.azurewebsites.net/todo/${todoID}/items`
           )
         );
+        console.log(response);
         return response;
       } catch (error) {
         console.log('Error in public lists');
@@ -346,9 +350,15 @@ export class TodosService {
 
   async DeleteTodo(id: number) {
     let token = localStorage.getItem('token');
-    if (!token) {
+    this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
+      this.isLoggedIn = loggedIn;
+    });
+    if (!token || !this.isLoggedIn) {
+      alert('Not logged in');
+      this.router.navigateByUrl('/login');
       return false;
     }
+
     let tokenValue: Token = JSON.parse(token);
 
     try {
@@ -372,10 +382,9 @@ export class TodosService {
   async GetTodos() {
     this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
-      if (this.isLoggedIn) {
-        // Perform any actions you want when the user is logged in
-      } else console.log('User is not logged in!');
     });
+
+    console.log(this.isLoggedIn);
 
     if (!this.isLoggedIn) {
       // Make request with public lists
@@ -383,7 +392,7 @@ export class TodosService {
         let response = await firstValueFrom(
           this.httpClient.get('https://unfwfspring2024.azurewebsites.net/todo')
         );
-        console.log(response);
+        console.log(response, 'DUDE3');
         return response;
       } catch (error) {
         console.log('Error in public lists');
@@ -392,16 +401,18 @@ export class TodosService {
     } else {
       try {
         let token = localStorage.getItem('token');
-        if (!token) {
+        console.log(!token, !this.actSvc.isLoggedIn);
+        if (!token || !this.actSvc.isLoggedIn) {
           let response = await firstValueFrom(
             this.httpClient.get(
               'https://unfwfspring2024.azurewebsites.net/todo'
             )
           );
-          console.log(response);
+          console.log(response, 'DUDE');
           return response;
         }
 
+        console.log(!token, !this.actSvc.isLoggedIn, this.loggedIn);
         let tokenValue: Token = JSON.parse(token);
 
         const headers = new HttpHeaders({
@@ -414,7 +425,7 @@ export class TodosService {
             { headers: headers }
           )
         );
-        console.log(response);
+        console.log(response, 'DUDE2');
         return response;
       } catch (error) {
         return null;
@@ -425,6 +436,7 @@ export class TodosService {
   async AddTodo(title: string, publicStatus: boolean) {
     let token = localStorage.getItem('token');
     if (!token) {
+      console.log('FALSE');
       return false;
     }
     let tokenValue: Token = JSON.parse(token);
@@ -449,6 +461,7 @@ export class TodosService {
       console.log(response);
       return true;
     } catch (error) {
+      console.log(error);
       return false;
     }
   }

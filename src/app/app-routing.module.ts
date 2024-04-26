@@ -11,6 +11,7 @@ import { ShareComponent } from './views/share/share.component';
 import { AddListItemComponent } from './views/add-list-item/add-list-item.component';
 import { UpdateListItemComponent } from './views/update-list-item/update-list-item.component';
 import { UpdateTodoComponent } from './views/update-todo/update-todo.component';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -28,14 +29,17 @@ const routes: Routes = [
   {
     path: 'addTodo',
     component: AddTodoComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'updateUser',
     component: UpdateUserComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'edit/:id',
     component: ViewTodosComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'listItem/:id',
@@ -44,18 +48,22 @@ const routes: Routes = [
   {
     path: 'share/:id',
     component: ShareComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'addListItem/:id',
     component: AddListItemComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'updateListItem/:todoid/:itemId',
     component: UpdateListItemComponent,
+    canActivate: [AuthGuard],
   },
   {
     path: 'updateTodo/:id',
     component: UpdateTodoComponent,
+    canActivate: [AuthGuard],
   },
 ];
 
