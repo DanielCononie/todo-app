@@ -296,6 +296,7 @@ export class TodosService {
               `https://unfwfspring2024.azurewebsites.net/todo/${todoID}/items`
             )
           );
+          console.log(response);
           return response;
         }
 
@@ -311,6 +312,7 @@ export class TodosService {
             { headers: headers }
           )
         );
+        console.log(response);
         return response;
       } catch (error) {
         return null;

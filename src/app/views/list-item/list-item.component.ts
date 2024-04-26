@@ -15,6 +15,7 @@ interface Todo {
   created_at: Date;
   created_by: number;
   public_list: boolean;
+  sharedWith: User[];
 }
 
 interface ListItem {
@@ -42,6 +43,8 @@ export class ListItemComponent {
   todoItems: ListItem[] = [];
   filteredTodoItems: ListItem[] = [];
   userID: number | undefined;
+  userEmail: string | undefined;
+  usersSharedWith: User[] = [];
   currentTodoList: Todo | undefined;
   ngOnInit(): void {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
@@ -72,6 +75,7 @@ export class ListItemComponent {
 
     if (userData) {
       this.userID = userData.id;
+      this.userEmail = userData.email;
     }
   }
 
@@ -84,7 +88,15 @@ export class ListItemComponent {
     this.currentTodoList = (await this.todoSvc.GetTodoById(
       this.todoID
     )) as Todo;
+
+    this.usersSharedWith = this.currentTodoList.sharedWith;
     console.log(this.currentTodoList);
+  }
+
+  isUserSharedWith(email: string | undefined): boolean {
+    console.log(this.usersSharedWith);
+    if (!email) return false;
+    return this.usersSharedWith.some((user) => user.email === email);
   }
   async DeleteListItem(list_item_id: number, todoID: number | undefined) {
     if (!todoID) {
