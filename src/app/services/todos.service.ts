@@ -24,6 +24,44 @@ export class TodosService {
     });
   }
 
+  async UpdateTodo(title: string, public_list: boolean, list_id: number) {
+    let list_data = {
+      title: title,
+      public_list: public_list,
+    };
+
+    let token = localStorage.getItem('token');
+    if (!token) {
+      return false;
+    }
+    let tokenValue: Token = JSON.parse(token);
+
+    if (!title || public_list == undefined) {
+      return false;
+    }
+
+    console.log(list_data);
+
+    try {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${tokenValue.token}`,
+      });
+
+      let response = await firstValueFrom(
+        this.httpClient.patch(
+          `https://unfwfspring2024.azurewebsites.net/todo/${list_id}`,
+          list_data,
+          { headers: headers }
+        )
+      );
+      console.log(response);
+      return true;
+    } catch (error) {
+      console.log('Update false');
+      return false;
+    }
+  }
+
   async GetListItemById(todoId: number, list_item_id: number) {
     this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
@@ -189,6 +227,7 @@ export class TodosService {
             `https://unfwfspring2024.azurewebsites.net/todo/${todoID}`
           )
         );
+        console.log(response);
         return response;
       } catch (error) {
         console.log('Error in public lists');
@@ -203,6 +242,7 @@ export class TodosService {
               `https://unfwfspring2024.azurewebsites.net/todo/${todoID}`
             )
           );
+          console.log(response);
           return response;
         }
 

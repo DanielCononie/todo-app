@@ -84,6 +84,7 @@ export class ListItemComponent {
     this.currentTodoList = (await this.todoSvc.GetTodoById(
       this.todoID
     )) as Todo;
+    console.log(this.currentTodoList);
   }
   async DeleteListItem(list_item_id: number, todoID: number | undefined) {
     if (!todoID) {

@@ -37,6 +37,7 @@ export class ViewTodosComponent {
   ngOnInit(): void {
     this.GetUser();
     this.ViewTodos();
+    console.log(this.todos);
   }
 
   async GetUser() {
@@ -67,7 +68,6 @@ export class ViewTodosComponent {
 
   filterTodos(): void {
     if (this.searchFormControl.value) {
-      console.log('Search');
       const searchTerm = this.searchFormControl.value.toLowerCase();
       this.filteredTodos = this.todos.filter(
         (todo) => todo.id.toString() === searchTerm

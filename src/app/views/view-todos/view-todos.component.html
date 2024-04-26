@@ -60,7 +60,7 @@
     </div>
     <div class="todo-buttons">
       <button
-        [routerLink]="['/edit', todo.id]"
+        [routerLink]="['/updateTodo', todo.id]"
         *ngIf="userID && todo.created_by === userID"
       >
         Edit
@@ -83,7 +83,7 @@
           View List items
         </button>
         <button
-          *ngIf="userID && todo.created_by === userID"
+          *ngIf="userID && todo.created_by === userID && !todo.public_list"
           mat-menu-item
           [routerLink]="['/addListItem', todo.id]"
         >
