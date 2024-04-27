@@ -10,6 +10,12 @@ import { AccountService } from '../../services/account.service';
 })
 export class LoginComponent {
   constructor(private accSvc: AccountService, private router: Router) {}
+  isLoggedIn: boolean = false;
+  ngOnInit() {
+    this.accSvc.UserLoggedIn.subscribe((isLoggedIn: boolean) => {
+      this.isLoggedIn = isLoggedIn;
+    });
+  }
 
   emailFormControl = new FormControl('t@t.com', [Validators.required]);
   passwordFormControl = new FormControl('test', [Validators.required]);
@@ -23,6 +29,8 @@ export class LoginComponent {
       let loggedIn = await this.accSvc.Login(email, password);
 
       if (loggedIn) {
+        console.log(localStorage.getItem('token'), 'token after logged in');
+        console.log(this.isLoggedIn);
         this.router.navigate(['/']);
       } else {
         this.errorMessage = 'Invalid Login';

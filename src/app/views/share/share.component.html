@@ -8,11 +8,38 @@
 >
   SHARE LIST
 </h2>
-<div class="share-container">
-  <mat-form-field class="input-one" [style.width.px]="300">
-    <mat-label>Email to share with: </mat-label>
-    <input matInput [formControl]="emailFormControl" />
-  </mat-form-field>
-  <button (click)="ShareList()" class="submit-btn">Submit</button>
-  <p style="color: red; font-weight: bold">{{ errMessage }}</p>
+<div style="display: flex; justify-content: space-around">
+  <div class="share-container">
+    <mat-form-field class="input-one" [style.width.px]="300">
+      <mat-label>Email to share with: </mat-label>
+      <input matInput [formControl]="emailFormControl" />
+    </mat-form-field>
+    <button (click)="ShareList()" class="submit-btn">Submit</button>
+    <p style="color: red; font-weight: bold">{{ errMessage }}</p>
+  </div>
+  <div *ngIf="currentTodoList">
+    <h2>Shared Users</h2>
+    <div
+      *ngFor="let user of currentTodoList?.shared_with"
+      style="
+        border: solid black;
+        margin-bottom: 10px;
+        border-radius: 12px;
+        padding: 10px;
+        width: 80%;
+      "
+    >
+      <p>Email: {{ user.email }}</p>
+      <p>Name: {{ user.name }}</p>
+      <button
+        matTooltip="Delete"
+        mat-icon-button
+        class="example-icon favorite-icon"
+        aria-label="Example icon-button with heart icon"
+        (click)="DeleteSharedList(user.email)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+  </div>
 </div>

@@ -26,6 +26,31 @@ export class TodosService {
     this.loggedIn = this.actSvc.isLoggedIn;
   }
 
+  async DeleteSharedList(email: string, id: number) {
+    let token = localStorage.getItem('token');
+    if (!token) {
+      return false;
+    }
+    let tokenValue: Token = JSON.parse(token);
+
+    try {
+      const headers = new HttpHeaders({
+        Authorization: `Bearer ${tokenValue.token}`,
+      });
+
+      let response = await firstValueFrom(
+        this.httpClient.delete(
+          `https://unfwfspring2024.azurewebsites.net/todo/${id}}/share/${email}`,
+          { headers: headers }
+        )
+      );
+      console.log(response);
+      return true;
+    } catch (error) {
+      return false;
+    }
+  }
+
   async UpdateTodo(title: string, public_list: boolean, list_id: number) {
     let list_data = {
       title: title,
@@ -386,7 +411,7 @@ export class TodosService {
       this.isLoggedIn = loggedIn;
     });
 
-    console.log(this.isLoggedIn);
+    console.log(this.isLoggedIn, 'In view todos');
 
     if (!this.isLoggedIn) {
       // Make request with public lists

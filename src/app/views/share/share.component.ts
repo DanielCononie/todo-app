@@ -3,6 +3,21 @@ import { TodosService } from '../../services/todos.service';
 import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
+interface User {
+  email: string;
+  name: string;
+  id: number;
+}
+
+interface Todo {
+  id: number;
+  title: string;
+  created_at: Date;
+  created_by: number;
+  public_list: boolean;
+  shared_with: User[];
+}
+
 @Component({
   selector: 'app-share',
   templateUrl: './share.component.html',
@@ -15,6 +30,7 @@ export class ShareComponent {
     private router: Router
   ) {}
   todoID: number | undefined;
+  currentTodoList: Todo | null = null;
   emailFormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -26,6 +42,32 @@ export class ShareComponent {
     if (id) {
       this.todoID = parseInt(id);
       console.log(this.todoID);
+    }
+    this.GetTodoById();
+  }
+
+  async GetTodoById() {
+    if (!this.todoID) {
+      console.log('Route to home');
+      return;
+    }
+
+    this.currentTodoList = (await this.todoSvc.GetTodoById(
+      this.todoID
+    )) as Todo;
+    console.log('Shared with', this.currentTodoList.shared_with);
+  }
+
+  async DeleteSharedList(email: string) {
+    if (this.todoID && this.currentTodoList) {
+      let didDelete = await this.todoSvc.DeleteSharedList(email, this.todoID);
+
+      if (didDelete) {
+        alert('Delete successful');
+        this.currentTodoList.shared_with.filter((user) => user.email !== email);
+      } else {
+        alert('Unsucessful');
+      }
     }
   }
 

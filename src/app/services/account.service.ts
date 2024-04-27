@@ -128,6 +128,7 @@ export class AccountService {
       localStorage.setItem(`token`, JSON.stringify(response));
       this.UserLoggedIn.emit(true);
       this.isLoggedIn = true;
+
       return true;
     } catch (error) {
       return false;
