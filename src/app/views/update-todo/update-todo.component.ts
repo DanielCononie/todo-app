@@ -51,12 +51,11 @@ export class UpdateTodoComponent {
   }
 
   async UpdateTodo() {
-    console.log('Run');
     if (this.titleFormControl.invalid || this.publicFormControl.invalid) {
       this.errMessage = 'Both are required';
       return;
     }
-    console.log('Run2');
+
     let title = this.titleFormControl.value;
     let public_form_value = this.publicFormControl.value;
 
@@ -74,20 +73,18 @@ export class UpdateTodoComponent {
       }
     } else {
       this.errMessage = 'Authentication error, returning to home';
-      console.log();
+
       return;
     }
   }
 
   async GetTodoById() {
     if (!this.todoID) {
-      console.log('Route to home');
       return;
     }
 
     this.currentTodoList = (await this.todoSvc.GetTodoById(
       this.todoID
     )) as Todo;
-    console.log(this.currentTodoList);
   }
 }

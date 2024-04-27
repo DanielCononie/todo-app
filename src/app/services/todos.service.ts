@@ -44,7 +44,7 @@ export class TodosService {
           { headers: headers }
         )
       );
-      console.log(response);
+
       return true;
     } catch (error) {
       return false;
@@ -67,8 +67,6 @@ export class TodosService {
       return false;
     }
 
-    console.log(list_data);
-
     try {
       const headers = new HttpHeaders({
         Authorization: `Bearer ${tokenValue.token}`,
@@ -81,10 +79,9 @@ export class TodosService {
           { headers: headers }
         )
       );
-      console.log(response);
+
       return true;
     } catch (error) {
-      console.log('Update false');
       return false;
     }
   }
@@ -102,10 +99,9 @@ export class TodosService {
             `https://unfwfspring2024.azurewebsites.net/todo/${todoId}/item/${list_item_id}`
           )
         );
-        console.log('List item by ID', response);
+
         return response;
       } catch (error) {
-        console.log('Error in public lists');
         return null;
       }
     } else {
@@ -117,7 +113,7 @@ export class TodosService {
               `https://unfwfspring2024.azurewebsites.net/todo/${todoId}/item/${list_item_id}`
             )
           );
-          console.log('List item by ID', response);
+
           return response;
         }
 
@@ -162,8 +158,6 @@ export class TodosService {
       return false;
     }
 
-    console.log(list_item_data);
-
     try {
       const headers = new HttpHeaders({
         Authorization: `Bearer ${tokenValue.token}`,
@@ -176,10 +170,9 @@ export class TodosService {
           { headers: headers }
         )
       );
-      console.log(response);
+
       return true;
     } catch (error) {
-      console.log('Update false');
       return false;
     }
   }
@@ -195,7 +188,6 @@ export class TodosService {
       const headers = new HttpHeaders({
         Authorization: `Bearer ${tokenValue.token}`,
       });
-      console.log(list_item_id, todoID);
 
       let response = await firstValueFrom(
         this.httpClient.delete(
@@ -203,7 +195,7 @@ export class TodosService {
           { headers: headers }
         )
       );
-      console.log(response);
+
       return true;
     } catch (error) {
       return false;
@@ -234,7 +226,7 @@ export class TodosService {
           { headers: headers }
         )
       );
-      console.log(response);
+
       return true;
     } catch (error) {
       return false;
@@ -254,10 +246,9 @@ export class TodosService {
             `https://unfwfspring2024.azurewebsites.net/todo/${todoID}`
           )
         );
-        console.log(response);
+
         return response;
       } catch (error) {
-        console.log('Error in public lists');
         return null;
       }
     } else {
@@ -269,7 +260,7 @@ export class TodosService {
               `https://unfwfspring2024.azurewebsites.net/todo/${todoID}`
             )
           );
-          console.log(response);
+
           return response;
         }
 
@@ -299,17 +290,16 @@ export class TodosService {
 
     if (!this.isLoggedIn) {
       // Make request with public lists
-      console.log('Yo');
+
       try {
         let response = await firstValueFrom(
           this.httpClient.get(
             `https://unfwfspring2024.azurewebsites.net/todo/${todoID}/items`
           )
         );
-        console.log(response);
+
         return response;
       } catch (error) {
-        console.log('Error in public lists');
         return null;
       }
     } else {
@@ -321,7 +311,7 @@ export class TodosService {
               `https://unfwfspring2024.azurewebsites.net/todo/${todoID}/items`
             )
           );
-          console.log(response);
+
           return response;
         }
 
@@ -337,7 +327,7 @@ export class TodosService {
             { headers: headers }
           )
         );
-        console.log(response);
+
         return response;
       } catch (error) {
         return null;
@@ -368,7 +358,7 @@ export class TodosService {
           { headers: headers }
         )
       );
-      console.log(response);
+
       return true;
     } catch (error) {
       return false;
@@ -399,7 +389,7 @@ export class TodosService {
           { headers: headers }
         )
       );
-      console.log(response);
+
       return true;
     } catch (error) {
       return false;
@@ -411,35 +401,31 @@ export class TodosService {
       this.isLoggedIn = loggedIn;
     });
 
-    console.log(this.isLoggedIn, 'In view todos');
-
     if (!this.isLoggedIn) {
       // Make request with public lists
       try {
         let response = await firstValueFrom(
           this.httpClient.get('https://unfwfspring2024.azurewebsites.net/todo')
         );
-        console.log(response, 'DUDE3');
+
         return response;
       } catch (error) {
-        console.log('Error in public lists');
         return null;
       }
     } else {
       try {
         let token = localStorage.getItem('token');
-        console.log(!token, !this.actSvc.isLoggedIn);
+
         if (!token || !this.actSvc.isLoggedIn) {
           let response = await firstValueFrom(
             this.httpClient.get(
               'https://unfwfspring2024.azurewebsites.net/todo'
             )
           );
-          console.log(response, 'DUDE');
+
           return response;
         }
 
-        console.log(!token, !this.actSvc.isLoggedIn, this.loggedIn);
         let tokenValue: Token = JSON.parse(token);
 
         const headers = new HttpHeaders({
@@ -452,7 +438,7 @@ export class TodosService {
             { headers: headers }
           )
         );
-        console.log(response, 'DUDE2');
+
         return response;
       } catch (error) {
         return null;
@@ -463,7 +449,6 @@ export class TodosService {
   async AddTodo(title: string, publicStatus: boolean) {
     let token = localStorage.getItem('token');
     if (!token) {
-      console.log('FALSE');
       return false;
     }
     let tokenValue: Token = JSON.parse(token);
@@ -485,10 +470,9 @@ export class TodosService {
           { headers: headers }
         )
       );
-      console.log(response);
+
       return true;
     } catch (error) {
-      console.log(error);
       return false;
     }
   }

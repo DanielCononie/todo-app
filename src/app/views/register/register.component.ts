@@ -47,7 +47,6 @@ export class RegisterComponent {
           this.errorMessage = 'User Creation failed, email already exists';
         }
       } catch (err) {
-        console.error('Error creating user:', err);
         this.loading = false;
       }
     } else {

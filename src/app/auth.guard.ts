@@ -9,7 +9,7 @@ export const AuthGuard: CanActivateFn = (route, state) => {
   } else {
     alert('You must be logged in to access this page!');
     // localStorage.removeItem('token');
-    console.log('Yo');
+
     router.navigate(['/']);
 
     return false;

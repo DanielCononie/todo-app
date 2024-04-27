@@ -37,10 +37,9 @@ export class ViewTodosComponent {
   async ngOnInit() {
     this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
-      console.log(this.isLoggedIn); // Make sure this prints true after login
-      this.GetUser(); // Call the function to fetch todos after login
+
+      this.GetUser();
       this.ViewTodos();
-      console.log(this.todos);
     });
     await this.GetUser();
     await this.ViewTodos();

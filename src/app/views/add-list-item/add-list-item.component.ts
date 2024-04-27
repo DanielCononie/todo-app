@@ -32,7 +32,6 @@ export class AddListItemComponent {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       this.todoID = parseInt(id);
-      console.log(this.todoID);
     }
   }
   async AddListItem() {

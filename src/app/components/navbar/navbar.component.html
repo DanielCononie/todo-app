@@ -1,17 +1,4 @@
 <mat-toolbar color="primary">
-  <button mat-icon-button matTooltip="Menu" [matMenuTriggerFor]="menu">
-    <mat-icon>menu</mat-icon>
-  </button>
-  <mat-menu #menu="matMenu">
-    <button mat-menu-item [routerLink]="['/']">View Todo's</button>
-    <button
-      *ngIf="isLoggedIn === true"
-      mat-menu-item
-      [routerLink]="['/addTodo']"
-    >
-      Post new todo
-    </button>
-  </mat-menu>
   <button
     [routerLink]="['/']"
     matTooltip="Click here to go to the homepage"
@@ -20,6 +7,16 @@
     aria-label="Example icon-button with heart icon"
   >
     <mat-icon>home</mat-icon>
+  </button>
+  <button
+    *ngIf="isLoggedIn === true"
+    [routerLink]="['/addTodo']"
+    matTooltip="Click here to add a new todo list"
+    mat-icon-button
+    class="example-icon favorite-icon"
+    aria-label="Example icon-button with heart icon"
+  >
+    <mat-icon>add</mat-icon>
   </button>
   <span class="example-spacer" style="width: 90%"></span>
 

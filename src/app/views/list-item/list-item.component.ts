@@ -50,7 +50,6 @@ export class ListItemComponent {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       this.todoID = parseInt(id);
-      console.log(this.todoID);
     }
     this.GetUser();
     this.GetTodoById();
@@ -60,7 +59,6 @@ export class ListItemComponent {
   // GET LIST ITEMS BY ID
   async GetListItems() {
     if (!this.todoID) {
-      console.log('Route to home');
       return;
     }
     this.todoItems = (await this.todoSvc.GetListItems(
@@ -81,7 +79,6 @@ export class ListItemComponent {
 
   async GetTodoById() {
     if (!this.todoID) {
-      console.log('Route to home');
       return;
     }
 
@@ -90,11 +87,9 @@ export class ListItemComponent {
     )) as Todo;
 
     this.usersSharedWith = this.currentTodoList.sharedWith;
-    console.log(this.currentTodoList);
   }
 
   isUserSharedWith(email: string | undefined): boolean {
-    console.log(this.usersSharedWith);
     if (!email) return false;
     return this.usersSharedWith.some((user) => user.email === email);
   }

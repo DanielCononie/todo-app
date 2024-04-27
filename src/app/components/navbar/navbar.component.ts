@@ -14,9 +14,6 @@ export class NavbarComponent {
   ngOnInit(): void {
     this.actSvc.UserLoggedIn.subscribe((loggedIn: boolean) => {
       this.isLoggedIn = loggedIn;
-      if (this.isLoggedIn) {
-        // Perform any actions you want when the user is logged in
-      } else console.log('User is not logged in!');
     });
   }
   LogOut() {

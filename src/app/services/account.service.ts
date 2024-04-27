@@ -50,7 +50,6 @@ export class AccountService {
         })
       );
 
-      console.log(response);
       return response;
     } catch (error) {
       return false;
@@ -98,10 +97,9 @@ export class AccountService {
           { headers: headers }
         )
       );
-      console.log(response);
+
       return true;
     } catch (error) {
-      console.log('Update false');
       return false;
     }
   }
@@ -152,7 +150,6 @@ export class AccountService {
 
       return true;
     } catch (err: any) {
-      console.log(err);
       return false;
     }
   }

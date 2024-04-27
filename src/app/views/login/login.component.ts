@@ -29,8 +29,6 @@ export class LoginComponent {
       let loggedIn = await this.accSvc.Login(email, password);
 
       if (loggedIn) {
-        console.log(localStorage.getItem('token'), 'token after logged in');
-        console.log(this.isLoggedIn);
         this.router.navigate(['/']);
       } else {
         this.errorMessage = 'Invalid Login';

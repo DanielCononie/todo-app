@@ -61,15 +61,15 @@
         mat-icon-button
         class="example-icon favorite-icon"
         aria-label="Example icon-button with heart icon"
-        *ngIf="userID === currentTodoList?.created_by"
+        *ngIf="
+          userID === currentTodoList?.created_by ||
+          (userID !== currentTodoList?.created_by &&
+            !currentTodoList?.public_list)
+        "
         [routerLink]="['/updateListItem', currentTodoList?.id, item.id]"
       >
         <mat-icon>update</mat-icon>
       </button>
     </div>
-  </div>
-  <div>
-    <h2 style="text-align: center">Shared Users</h2>
-    <!-- Shared Users with delete button -->
   </div>
 </div>

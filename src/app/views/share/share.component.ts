@@ -41,21 +41,18 @@ export class ShareComponent {
     const id = this.activatedRoute.snapshot.paramMap.get('id');
     if (id) {
       this.todoID = parseInt(id);
-      console.log(this.todoID);
     }
     this.GetTodoById();
   }
 
   async GetTodoById() {
     if (!this.todoID) {
-      console.log('Route to home');
       return;
     }
 
     this.currentTodoList = (await this.todoSvc.GetTodoById(
       this.todoID
     )) as Todo;
-    console.log('Shared with', this.currentTodoList.shared_with);
   }
 
   async DeleteSharedList(email: string) {
@@ -64,7 +61,10 @@ export class ShareComponent {
 
       if (didDelete) {
         alert('Delete successful');
-        this.currentTodoList.shared_with.filter((user) => user.email !== email);
+        this.currentTodoList.shared_with =
+          this.currentTodoList.shared_with.filter(
+            (user) => user.email !== email
+          );
       } else {
         alert('Unsucessful');
       }

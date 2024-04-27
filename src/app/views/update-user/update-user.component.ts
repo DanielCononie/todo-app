@@ -31,8 +31,6 @@ export class UpdateUserComponent {
     let userData = (await this.accSvc.GetUser()) as User | false;
 
     if (userData === false) {
-      // Handle false scenario
-      console.log('Failure');
     } else {
       this.initialName = userData.name;
       this.initialEmail = userData.email;
