@@ -24,6 +24,9 @@
       <mat-icon>cancel</mat-icon>
     </button>
     <button (click)="filterMyLists()" class="filter-btn">My lists</button>
+    <button (click)="filterSharedLists()" class="filter-btn">
+      Shared lists
+    </button>
   </span>
 
   <div *ngFor="let todo of filteredTodos" class="todo-item">
@@ -61,7 +64,10 @@
     <div class="todo-buttons">
       <button
         [routerLink]="['/updateTodo', todo.id]"
-        *ngIf="userID && todo.created_by === userID"
+        *ngIf="
+          (userID && todo.created_by === userID) ||
+          (todo.created_by !== userID && !todo.public_list)
+        "
       >
         Edit
       </button>
@@ -83,7 +89,10 @@
           View List items
         </button>
         <button
-          *ngIf="userID && todo.created_by === userID"
+          *ngIf="
+            (userID && todo.created_by === userID) ||
+            (todo.created_by !== userID && !todo.public_list)
+          "
           mat-menu-item
           [routerLink]="['/addListItem', todo.id]"
         >

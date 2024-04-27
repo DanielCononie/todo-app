@@ -81,6 +81,12 @@ export class ViewTodosComponent {
     }
   }
 
+  filterSharedLists(): void {
+    this.filteredTodos = this.todos.filter(
+      (todo) => todo.created_by !== this.userID && !todo.public_list
+    );
+  }
+
   resetTodos(): void {
     this.filteredTodos = this.todos;
   }
